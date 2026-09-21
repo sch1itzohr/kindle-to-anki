@@ -1,5 +1,39 @@
 # Kindle-to-Anki
 
+The recommended workflow is now the direct AnkiConnect importer:
+
+```bash
+export MW_API_KEY=your-merriam-webster-key
+python3 kindle_to_anki.py --kindle-db /path/to/vocab.db --deck "Kindle Words"
+```
+
+Anki Desktop must be running with the AnkiConnect add-on enabled. The importer
+creates a `Kindle Vocabulary` note type, adds definitions/examples/audio, keeps
+Kindle lookup context on the card, and remembers the last processed timestamp
+in `~/.kindle-to-anki`. Use `--dry-run` to inspect cards without contacting
+Anki, or `--all` to process the complete database.
+
+If a word cannot be found, the error includes the API status, returned
+suggestions or response preview, and the exact URL with the API key redacted.
+Use `--all --dry-run` to retry and inspect dictionary failures without adding
+anything to Anki.
+
+Failed words are always printed. To permanently remove only those failed words
+from `vocab.db`, add the explicit `--delete-failed` flag:
+
+```bash
+python3 kindle_to_anki.py --kindle-db /path/to/vocab.db \
+  --deck "Kindle Words" --delete-failed
+```
+
+This deletes the related `WORDS` and `LOOKUPS` rows in a SQLite transaction and
+cannot be combined with `--dry-run`.
+
+Anki imports are sent in batches of 10 by default. Adjust this with
+`--batch-size 5` or `--batch-size 25`. Existing cards tagged `kindle` are also
+moved into the requested deck on each run, repairing cards from older runs that
+landed in `Default`.
+
 Import from kindle vocabulary to anki-ready csv file. Uses LingvoLeo service to
 get translataion, transcription, pronounciation and some image.
 

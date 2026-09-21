@@ -1,0 +1,12 @@
+# Local state and credentials
+.kindle-to-anki
+.env
+
+# Python-generated files
+__pycache__/
+*.py[cod]
+
+# Private Kindle/Anki data and generated exports
+*.db
+*.sqlite
+output.csv
