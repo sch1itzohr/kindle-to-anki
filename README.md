@@ -34,6 +34,38 @@ Anki imports are sent in batches of 10 by default. Adjust this with
 moved into the requested deck on each run, repairing cards from older runs that
 landed in `Default`.
 
+## Automatic sync on macOS
+
+The repository includes a macOS `launchd` watcher. It checks every 30 seconds
+for `/Volumes/Kindle/System/vocabulary/vocab.db`, waits for AnkiConnect, and
+runs the incremental importer. It uses the checkpoint and never enables
+`--all` or `--delete-failed` automatically.
+
+Store the Merriam-Webster key in Keychain:
+
+```bash
+security add-generic-password \
+  -a "$USER" \
+  -s kindle-to-anki-mw-api-key \
+  -w "$MW_API_KEY" \
+  -U
+```
+
+Install the watcher:
+
+```bash
+chmod +x scripts/*.sh
+scripts/install-launch-agent.sh
+```
+
+The default deck is `Kindle words`; edit the generated file at
+`~/Library/LaunchAgents/com.kindle-to-anki.plist` if you want another deck.
+Logs are written to `~/Library/Logs/kindle-to-anki.log`. To uninstall it:
+
+```bash
+scripts/uninstall-launch-agent.sh
+```
+
 Import from kindle vocabulary to anki-ready csv file. Uses LingvoLeo service to
 get translataion, transcription, pronounciation and some image.
 

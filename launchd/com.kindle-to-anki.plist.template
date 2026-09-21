@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.kindle-to-anki</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/zsh</string>
+        <string>__REPO_DIR__/scripts/kindle-to-anki-watch.sh</string>
+    </array>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>KINDLE_TO_ANKI_REPO</key>
+        <string>__REPO_DIR__</string>
+        <key>KINDLE_TO_ANKI_CHECKPOINT</key>
+        <string>__HOME__/.kindle-to-anki</string>
+        <key>KINDLE_TO_ANKI_DECK</key>
+        <string>Kindle words</string>
+        <key>KINDLE_TO_ANKI_BATCH_SIZE</key>
+        <string>5</string>
+        <key>KINDLE_TO_ANKI_TIMEOUT</key>
+        <string>60</string>
+    </dict>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>StartInterval</key>
+    <integer>30</integer>
+    <key>ThrottleInterval</key>
+    <integer>10</integer>
+    <key>ProcessType</key>
+    <string>Background</string>
+    <key>StandardOutPath</key>
+    <string>__HOME__/Library/Logs/kindle-to-anki.log</string>
+    <key>StandardErrorPath</key>
+    <string>__HOME__/Library/Logs/kindle-to-anki.log</string>
+</dict>
+</plist>
